@@ -16,7 +16,7 @@ def preprocess(df):
     df_temp.sort_values(by="4/15/20",axis=0,ascending = False,inplace=True)
     return df_temp
 
-def create_geojson_features(df,term="cases"):
+def create_geojson_features(df,term,clr):
     features = []
     print('> Creating GeoJSON features...')
     dates = list(df.columns)[4:]
@@ -38,7 +38,7 @@ def create_geojson_features(df,term="cases"):
                         'icon': 'circle',
                         #"opacity": 0.2,
                         'iconstyle':{
-                            'fillColor': "#ff0000",
+                            'fillColor': clr,
                             #'fillOpacity': 0.2,
                             'stroke': 'false',
                             'radius': int(np.power(df.iloc[i,j],0.25)*2)
@@ -68,14 +68,14 @@ def add_to_map(features,mp):
     folium.TileLayer(opacity=0.2).add_to(mp)
     return mp
 
-def get_map(df,term):
+def get_map(df,term,clr):
     
     df_processed = preprocess(df)
     '''
     df_deaths_processed = preprocess(df_deaths)
     #df_recovered_processed = preprocess(df_recovered)
     '''
-    features = create_geojson_features(df_processed,term)
+    features = create_geojson_features(df_processed,term,clr)
     print('> Making map...')
     cases_map = folium.Map(location=[0,0], control_scale=True, zoom_start=1.5)
     print(type(cases_map))
@@ -87,7 +87,7 @@ def get_map(df,term):
 if __name__ == "__main__":
     df_cases_raw = pd.read_csv(BASE_URL+"{0}&filename={0}".format("time_series_covid19_confirmed_global.csv"))
     df_deaths_raw = pd.read_csv(BASE_URL+"{0}&filename={0}".format("time_series_covid19_deaths_global.csv"))
-    res = get_map(df_cases_raw,"cases")
+    res = get_map(df_cases_raw,"cases","#ff0000")
     res.save("COVID-19_cases_over_time.html")
-    res_deaths = get_map(df_deaths_raw,"deaths")
-    res.save("COVID-19_deaths_over_time.html")
+    res_deaths = get_map(df_deaths_raw,"deaths","#000000")
+    res_deaths.save("COVID-19_deaths_over_time.html")

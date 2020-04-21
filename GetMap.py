@@ -92,5 +92,5 @@ if __name__ == "__main__":
     res.save("COVID-19_cases_over_time.html")
     res_deaths = get_map(df_deaths_raw,"deaths","#000000")
     res_deaths.save("COVID-19_deaths_over_time.html")
-    res_recovered = get_map(df_recovered_raw,"recovered","#000000")
+    res_recovered = get_map(df_recovered_raw,"recovered","#008800")
     res_recovered.save("COVID-19_recovered_over_time.html")

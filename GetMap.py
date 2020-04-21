@@ -68,7 +68,7 @@ def add_to_map(features,mp):
     folium.TileLayer(opacity=0.2).add_to(mp)
     return mp
 
-def get_map(df,term,clr):
+def get_map(df,term,clr,mp=folium.Map(location=[0,0], control_scale=True, zoom_start=1.5)):
     
     df_processed = preprocess(df)
     '''
@@ -77,12 +77,11 @@ def get_map(df,term,clr):
     '''
     features = create_geojson_features(df_processed,term,clr)
     print('> Making map...')
-    cases_map = folium.Map(location=[0,0], control_scale=True, zoom_start=1.5)
-    print(type(cases_map))
-    add_to_map(features,cases_map)
-    print(type(cases_map))
+    print(type(mp))
+    add_to_map(features,mp)
+    print(type(mp))
     print('> Done.')
-    return cases_map
+    return mp
 
 if __name__ == "__main__":
     df_cases_raw = pd.read_csv(BASE_URL+"{0}&filename={0}".format("time_series_covid19_confirmed_global.csv"))

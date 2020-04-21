@@ -87,7 +87,10 @@ def get_map(df,term,clr):
 if __name__ == "__main__":
     df_cases_raw = pd.read_csv(BASE_URL+"{0}&filename={0}".format("time_series_covid19_confirmed_global.csv"))
     df_deaths_raw = pd.read_csv(BASE_URL+"{0}&filename={0}".format("time_series_covid19_deaths_global.csv"))
+    df_recovered_raw = pd.read_csv(BASE_URL+"{0}&filename={0}".format("time_series_covid19_recovered_global.csv"))
     res = get_map(df_cases_raw,"cases","#ff0000")
     res.save("COVID-19_cases_over_time.html")
     res_deaths = get_map(df_deaths_raw,"deaths","#000000")
     res_deaths.save("COVID-19_deaths_over_time.html")
+    res_recovered = get_map(df_recovered_raw,"recovered","#000000")
+    res_recovered.save("COVID-19_recovered_over_time.html")
